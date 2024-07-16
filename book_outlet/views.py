@@ -17,16 +17,12 @@ def index(request):
     })
 
 
-def book_detail(request,slug):
-    # try:
-    #  book = Book.objects.get(pk=id)
-    
-    # except: 
-    #  raise Http404()
-    book = get_object_or_404(Book, slug=slug)
-    return render(request ,"book_outlet/book_detail.html",{
-        "title" : book.title,
-        "author" : book.author,
-        "rating" : book.rating,
-        "is_best_seller" :book.is_best_selling
-    })       
+def book_detail(request,id):
+        book = Book.objects.get(pk=id)
+        return render(request, 'book_outlet/book_detail.html',{
+                "title" : book.title,
+                "author" : book.author,
+                "rating" : book.rating,
+                "is_bestseller" : book.is_bestselling
+
+        })
