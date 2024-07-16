@@ -7,6 +7,18 @@ from django.urls import reverse # type: ignore
 
 # Create your models here.
 
+class Country(models.Model):
+    name = models.CharField(max_length=10)
+    code = models.CharField(max_length=10)
+
+
+    def __str__(self):
+        return self.name
+
+
+
+class meta:
+    verbose_name_plural = "Countries"    
 
 class Address(models.Model):
     street = models.CharField(max_length=100)
@@ -14,10 +26,20 @@ class Address(models.Model):
     city = models.CharField(max_length=10)
 
 
+    def __str__(self):
+        return f"{self.street} , {self.postal_code} , {self.city}"
+    
+
+    class Meta:
+        verbose_name_plural = "Address Entries"
+        
+
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True)
+    
 
 
     def full_name(self):
@@ -32,6 +54,7 @@ class Book(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, related_name="books") 
     is_bestselling = models.BooleanField(default=False)
     slug = models.SlugField(default="" ,blank=True,  null=False, db_index=True)
+    published_countries = models.ManyToManyField(Country)
 
     def get_absolute_url(self):
         return reverse("book-detail",  args=[self.id])
