@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render # type: ignore
+from django.shortcuts import  render # type: ignore
 
 from .models import Book
 from django.db.models import Avg # type: ignore
